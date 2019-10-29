@@ -1,0 +1,85 @@
+class Node{
+    public int data;
+    public Node prev;
+    public Node next;
+    public Node( int data){
+        this.data=data;
+    }
+}
+class doubleList {
+    public Node head;
+    public Node last;
+
+    public doubleList() {
+        this.head = null;
+        this.last = null;
+
+    }
+
+    public void addFirst(int data) {
+        Node node = new Node(data);
+        if (this.head == null) {
+            this.head = node;
+            this.last=node;
+        } else {
+            node.next = this.head;
+            node.next.prev = node;
+            this.head = node;
+        }
+    }
+
+    private Node searchIndex(int Index){
+        int count=0;
+        Node cur = this.head;
+        while(count<Index){
+            cur=cur.next;
+            count++;
+            }
+            return cur;
+
+        }
+
+    public boolean addMiddle(int data,int Index,int count){
+        Node node=new Node(data);
+        if(Index==0){
+            addFirst(data);
+            return true;
+        }else if(Index==count){
+            addLast(data);
+            return true;
+        }else{
+           Node cur=searchIndex(Index);
+           node.next=cur;
+           node.prev=cur.prev;
+           cur.prev.next=node;
+           cur.prev=node;
+            return true;
+        }
+    }
+    public boolean contains(int Index,int data,int key){
+        int count=0;
+        Node node = new Node(data);
+        Node cur = this.head;
+        while(cur!=null) {
+            if (data == key) {
+                return true;
+
+            }
+            cur = cur.next;
+        }
+        return false;
+    }
+    
+    public void addLast(int data){
+        Node node = new Node(data);
+        if (this.head == null) {
+            this.head = node;
+            this.last=node;
+        } else {
+            node.prev.next = node;
+            node.prev = this.last;
+
+            this.last = node;
+        }
+    }
+}
